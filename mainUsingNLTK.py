@@ -12,7 +12,7 @@ lower_case = text.lower()
 cleaned_text = lower_case.translate(str.maketrans('', '', string.punctuation))
 
 # Using word_tokenize because it's faster than split()
-tokenized_words = word_tokenize(cleaned_text, "english")
+tokenized_words = word_tokenize(cleaned_text, "spanish")
 
 # Removing Stop Words
 final_words = []

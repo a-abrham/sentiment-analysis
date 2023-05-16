@@ -1,6 +1,8 @@
 import tkinter as tk
-from collections import Counter
 import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+from collections import Counter
 from nltk.corpus import stopwords
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from nltk.stem import WordNetLemmatizer
@@ -32,7 +34,7 @@ def analyze_sentiment():
 
     # Extract emotions
     emotion_list = []
-    with open('emotions.txt', 'r') as file:
+    with open('emotions.csv', 'r') as file:
         for line in file:
             clear_line = line.replace("\n", '').replace(
                 ",", '').replace("'", '').strip()
@@ -65,9 +67,22 @@ def plot_graph():
     emotion_list = window.emotion_list
 
     w = Counter(emotion_list)
+    emotion_counts = pd.Series(w)
+    emotion_counts.sort_values(ascending=False, inplace=True)
+
+    # Generate x-axis tick positions using NumPy
+    x_ticks = np.arange(len(emotion_counts))
+
     fig, ax1 = plt.subplots()
-    ax1.bar(w.keys(), w.values())
-    fig.autofmt_xdate()
+    ax1.bar(x_ticks, emotion_counts.values)
+    ax1.set_xticks(x_ticks)
+    ax1.set_xticklabels(emotion_counts.index, rotation=45, ha='right')
+
+    ax1.set_xlabel('Emotion')
+    ax1.set_ylabel('Count')
+    ax1.set_title('Emotion Distribution')
+
+    plt.tight_layout()
     plt.savefig('graph.png')
     plt.show()
 
@@ -95,10 +110,9 @@ analyze_button.pack(pady=10)
 
 plot_button = tk.Button(frame1, text="Plot Graph", command=plot_graph)
 plot_button.pack(pady=10)
-# Disable the plot button initially
+
 plot_button.config(state="disabled")
 
-# Sentiment result frame
 frame2 = tk.Frame(window)
 frame2.pack(pady=20)
 
@@ -108,5 +122,4 @@ result_label.pack()
 sentiment_label = tk.Label(frame2, text="", font=("Arial", 14, "bold"))
 sentiment_label.pack()
 
-# Start the GUI main loop
 window.mainloop()
