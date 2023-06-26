@@ -33,7 +33,7 @@ for word in tokenized_words:
         final_words.append(word)
 
 # NLP Emotion Algorithm
-# 1) Check if the word in the final word list is also present in emotion.txt
+# 1) Check if the word in the final word list is also present in emotion.csv
 #  - open the emotion file
 #  - Loop through each line and clear it
 #  - Extract the word and emotion using split
@@ -42,7 +42,7 @@ for word in tokenized_words:
 # 3) Finally count each emotion in the emotion list
 
 emotion_list = []
-with open('emotions.txt', 'r') as file:
+with open('emotions.csv', 'r') as file:
     for line in file:
         clear_line = line.replace("\n", '').replace(
             ",", '').replace("'", '').strip()

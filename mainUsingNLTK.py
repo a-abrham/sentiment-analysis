@@ -27,7 +27,7 @@ for word in final_words:
     lemma_words.append(word)
 
 emotion_list = []
-with open('emotions.txt', 'r') as file:
+with open('emotions.csv', 'r') as file:
     for line in file:
         clear_line = line.replace("\n", '').replace(
             ",", '').replace("'", '').strip()

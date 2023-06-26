@@ -8,6 +8,7 @@ from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import word_tokenize
 import string
+import os
 
 
 def analyze_sentiment():
@@ -34,7 +35,8 @@ def analyze_sentiment():
 
     # Extract emotions
     emotion_list = []
-    with open('emotions.csv', 'r') as file:
+    emotions_file = os.path.join(os.path.dirname(__file__), 'emotions.csv')
+    with open(emotions_file, 'r') as file:
         for line in file:
             clear_line = line.replace("\n", '').replace(
                 ",", '').replace("'", '').strip()
